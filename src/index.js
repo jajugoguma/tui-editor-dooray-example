@@ -94,8 +94,10 @@ const option = {
 				suggestionInfo.open = false;
 				setSuggestion(suggestionEl);
 
-				console.log(action.range.from, action.range.to);
-
+				// 에디터 인스턴스의 API를 활용하는 방식으로 변경되었습니다.
+				// 위젯룰을 적용하는 단계가 transaction을 생성하는 단계 이전에 수행되어야 하지만,
+				// 이 단계에서 transaction을 생성 후 dispatch하면 위젯룰이 적용되지 않습니다.
+				// 따라서 위젯룰을 적용 후 transaction을 생성하는 에디터 API를 사용하는 방식으로 변경하였습니다.
 				const [from, to] = editor.convertPosToMatchEditorMode(
 					action.range.from,
 					action.range.to,
@@ -107,10 +109,12 @@ const option = {
 					`[@가나다](dooray://1387695619080878080/tasks/3027615930754185470)`,
 				);
 
-				// const tr = action.view.state.tr
-				//   .deleteRange(action.range.from, action.range.to)
-				//   .insertText(`[@가나다](dooray://1387695619080878080/tasks/3027615930754185470)`, action.range.from);
-				// action.view.dispatch(tr);
+				/* 기존 코드 삭제
+				const tr = action.view.state.tr
+			    .deleteRange(action.range.from, action.range.to)
+			    .insertText(`[@가나다](dooray://1387695619080878080/tasks/3027615930754185470)`, action.range.from);
+			  action.view.dispatch(tr);
+        */
 
 				return true;
 			case 'ArrowUp':
@@ -149,7 +153,8 @@ const option = {
 			regex: /(^@|([()]|(->|(->>))|\s)@)$/,
 			cancelWithSpace: true,
 		}, // /[^`(\s|\w|\d)*][\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"](@)$/
-		{ name: 'task', regex: /(^\[|\[)$/, cancelWithSpace: false },
+		// autoComplete 플러그인 내에서 '[' 앞이 whiteSpace 문자일 때만 트리거하도록 수정되어서 트리거 정규식을 수정했습니다.
+		{ name: 'task', regex: /(\[)$/, cancelWithSpace: false },
 	],
 };
 
