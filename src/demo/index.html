@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="styleSheet" href="toastui-editor.css">
+  <style>
+    #suggestion {
+      position: absolute;
+      border-radius: 2px;
+      border: 1px solid #333;
+      min-width: 300px;
+      background-color: white;
+      padding: 10px;
+      transform: translateY(-1px);
+    }
+
+    #suggestion:hover .selected {
+      background-color: white;
+    }
+    #suggestion:hover > div:hover,
+    #suggestion .selected {
+      background-color: wheat;
+      cursor: pointer;
+    }
+  </style>
+  <title>Document</title>
+</head>
+<body>
+  <div id="editor"></div>
+
+  <script src="./main.js"></script>
+</body>
+</html>
